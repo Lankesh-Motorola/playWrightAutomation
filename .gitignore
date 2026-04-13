@@ -1,0 +1,89 @@
+# Playwright Automation Project - .gitignore
+# This file separates the Playwright testing project from legacy Cypress code
+
+# ============================================
+# Dependencies
+# ============================================
+node_modules/
+package-lock.json
+yarn.lock
+
+# ============================================
+# Environment & Secrets
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# ============================================
+# Test Results & Reports
+# ============================================
+test-results/
+playwright-report/
+coverage/
+.nyc_output/
+*.lcov
+
+# ============================================
+# Browser Downloads & Cache
+# ============================================
+downloads/
+.cache/
+
+# ============================================
+# Videos & Screenshots
+# ============================================
+videos/
+screenshots/
+artifacts/
+
+# ============================================
+# IDE & Editor
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-workspace
+
+# ============================================
+# System Files
+# ============================================
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================
+# Temporary Files
+# ============================================
+*.tmp
+.temp/
+tmp/
+
+# ============================================
+# Build Output
+# ============================================
+dist/
+build/
+out/
+
+# ============================================
+# IDE Configuration (Optional - uncomment if needed)
+# ============================================
+# .vscode/settings.json
+# .idea/
+
+# ============================================
+# Playwright Browser Installation
+# ============================================
+# Keep browser binaries in node_modules, but ignore cached data
+browsers/
+.playwright/
