@@ -6,6 +6,7 @@ const LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/login';
 const POST_LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
 const USERNAME = 'wcsr_automation@moto.com';
 const PASSWORD = 'Motorola@123';
+export const corp_id = 'WCSR_AUTO_1';
 
 // //14.0 CI Login Credentials
 // const LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/login';
