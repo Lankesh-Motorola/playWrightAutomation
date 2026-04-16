@@ -10,5 +10,9 @@
     "@playwright/test": "^1.43.0",
     "@types/node": "^20.0.0",
     "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "playwright-mcp-server": "^1.0.0"
   }
 }

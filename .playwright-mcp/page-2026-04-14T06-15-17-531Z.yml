@@ -1,0 +1,23 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e6]: WCSR Tool - Sign On
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - generic [ref=e10]: Username / Email
+          - textbox [ref=e11]
+          - text: Please enter the Email Id
+        - generic [ref=e12]:
+          - generic [ref=e13]: Password
+          - textbox [ref=e15]
+        - generic [ref=e17]: By entering your username and password, clicking to SIGN ON and further accessing the information system, you are acknowledging that you have read, understand and agree to the system notice provided on this page and are using the system only for the stated and authorized purposes consistent with your job duties.
+        - button "Sign On" [active] [ref=e19] [cursor=pointer]
+      - link "Forgot Password?" [ref=e21] [cursor=pointer]:
+        - /url: javascript:void(0)
+      - generic [ref=e22]: "System Notice: You are accessing a restricted information system that is the property of Motorola Solutions, Inc.. You must be authorized employee or contractor of a public safety agency with an active subscription, or an authorized employee or contractor of Motorola Solutions, Inc., to access this system. All use of this system may be monitored, recorded, and subject to audit. Unauthorized or illegal use of this system is strictly prohibited and may be subject to legal action, including without limitation, criminal and/or civil penalties, and injunctive redress. YOUR USE OF THIS SYSTEM CONSTITUTES YOUR CONSENT TO BE BOUND BY ALL TERMS, CONDITIONS, AND NOTICES ASSOCIATED WITH ITS USE, INCLUDING CONSENT TO ALL MONITORING RECORDING AND DISCLOSURE PROVISIONS."
+  - generic [ref=e23]:
+    - generic [ref=e24]: Copyright © 2003-2026 Motorola Solutions Inc. All rights reserved
+    - link "Cookies Policy" [ref=e26] [cursor=pointer]:
+      - /url: https://www.motorolasolutions.com/en_us/about/privacy-policy.html#cookies
+    - link "Privacy Policy" [ref=e28] [cursor=pointer]:
+      - /url: https://www.motorolasolutions.com/en_us/about/privacy-policy.html#privacystatement

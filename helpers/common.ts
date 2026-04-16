@@ -8,23 +8,55 @@ import { CATPage } from '../pages/CATPage';
 // const PASSWORD = 'Motorola@123';
 
 //14.0 CI Login Credentials
-const LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/login';
+const LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/login';
 const POST_LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
 const USERNAME = 'ciwcsr4@gmail.com';
 const PASSWORD = 'Kodiak@1234567890';
+export const corp_id = '140_CI_Automation';
+
+// Generate unique OSM list name starting with OSM-
+export function generateUniqueOSMListName(): string {
+  const timestamp = Date.now();
+  const randomId = Math.floor(Math.random() * 1000);
+  return `OSM-AutoTest-${timestamp}-${randomId}`;
+}
+
+// Generate unique code for OSM messages
+export function generateUniqueCode(): string {
+  // const timestamp = Date.now();
+  const randomId = Math.floor(Math.random() * 100);
+  return `${randomId}`;
+}
+
+// Generate unique short message
+export function generateUniqueShortMessage(): string {
+  const timestamp = Date.now();
+  const randomId = Math.floor(Math.random() * 1000);
+  return `ShortMsg-${timestamp.toString().slice(-6)}-${randomId}`;
+}
+
+// Generate unique long message
+export function generateUniqueLongMessage(): string {
+  const timestamp = Date.now();
+  const randomId = Math.floor(Math.random() * 1000);
+  return `LongMessage-${timestamp.toString().slice(-6)}-${randomId}`;
+}
 
 export async function wcsrLogin(page: Page): Promise<void> {
-  await page.goto(LOGIN_URL, { waitUntil: 'commit', timeout: 60_000 });
-  await expect(page.locator("input[name='username']")).toBeVisible({ timeout: 30_000 });
-  await page.locator("input[name='username']").fill(USERNAME);
-  await page.locator("input[name='password']").fill(PASSWORD);
-  
-  // Wait for navigation with networkidle to handle SPA routing
-  await Promise.all([
-    page.waitForNavigation({ waitUntil: 'networkidle', timeout: 60_000 }),
-    page.locator("button[title='Sign On']").click()
-  ]);
+  await page.goto(LOGIN_URL, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+
+  // Assert login page is ready before interacting
+  await expect(page.getByRole('button', { name: 'Sign On' })).toBeVisible({ timeout: 15_000 });
+
+  // Use positional locators since the label is not ARIA-linked to the inputs
+  await page.locator('input[name="username"]').first().fill(USERNAME);
+  await page.locator('input[name="password"]').fill(PASSWORD);
+  await page.getByRole('button', { name: 'Sign On' }).click();
+
+  // Wait for post-login navigation to the home page
+  await page.waitForURL('**/wcsr/home**', { timeout: 60_000 });
 }
+
 
 export async function verifyInvalidExternalUserSearch(page: Page, pageObj: CATPage, name: string): Promise<void> {
   await pageObj.getExternalUserBox().clear();
@@ -55,4 +87,23 @@ export async function launchAndGetNewPageObject(context: BrowserContext, pageObj
   
   // Return new PageObject instance for the NEW TAB
   return new CATPage(newPage);
+}
+
+export async function setupOSMPage(page: Page, context: BrowserContext): Promise<CATPage> {
+  await wcsrLogin(page);
+  const pageObj = new CATPage(page);
+  
+  const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
+  await newPageObj.getPage().waitForLoadState();
+  await newPageObj.openOSMPage().click();
+  
+  // Close popup if present
+  const closeBtn = newPageObj.getPage().locator('.msi-pop-up-modal-header-close');
+  const isVisible = await closeBtn.isVisible({ timeout: 3000 });
+  if (isVisible) {
+    await closeBtn.click();
+    await newPageObj.getPage().waitForTimeout(1000);
+  }
+  
+  return newPageObj;
 }

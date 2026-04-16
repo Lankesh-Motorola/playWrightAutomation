@@ -18,7 +18,7 @@ test.describe('One Portal CAT - Interop User', () => {
 
     const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
     await newPageObj.getInterpoUser();
-    await newPageObj.page.waitForLoadState('networkidle');
+    // await newPageObj.page.waitForLoadState('networkidle');
     
     await newPageObj.validateInterpoCount();
     await newPageObj.checkVisibility(newPageObj.getSearchBox());

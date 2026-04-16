@@ -596,18 +596,9 @@ export class CATPage {
 
   async checkVisibility(element: Locator | any) {
     // Check if element is visible - handles both Locators and Cypress chains
-    try {
-      if (typeof element.isVisible === 'function') {
         await expect(element).toBeVisible();
-      } else {
-        // Fallback for other types
-        const locator = this.page.locator('text=*');
-        expect(locator).toBeDefined();
       }
-    } catch (error) {
-      // Element might not be visible, continue
-    }
-  }
+  
 
   // --- Methods for Zone/Position/Priority Management ---
   getCancelButton(): Locator {
@@ -923,12 +914,28 @@ export class CATPage {
 
   // --- Methods for Interop_User Tests ---
   async getInterpoUser() {
-    // Navigate to Interop User list page
-    const interopNav = this.page.locator('text=Interop, text=Interop User, [id*="interop"]').first();
-    if (await interopNav.isVisible().catch(() => false)) {
-      await interopNav.click();
-      await this.page.waitForLoadState('networkidle');
+    // Navigate to Interop User list page by looking for navigation elements
+    const interopNavOptions = [
+      'text=Interop',
+      'text=Interop User', 
+      '[id*="interop"]',
+      'button:has-text("Interop")',
+      'a:has-text("Interop")',
+      '.nav-item:has-text("Interop")',
+      '[data-test="interop"]'
+    ];
+    
+    for (const selector of interopNavOptions) {
+      const element = this.page.locator(selector).first();
+      if (await element.isVisible().catch(() => false)) {
+        await element.click();
+        await this.page.waitForLoadState('networkidle');
+        return;
+      }
     }
+    
+    // If no navigation found, we may be on a unified user management page
+    // Continue with current page context
   }
 
   async validateInterpoCount() {
@@ -942,15 +949,20 @@ export class CATPage {
   }
 
   getAdvanceFilter(): Locator {
-    return this.page.locator('button:has-text("Filter"), button:has-text("Advanced"), [id*="filter"]').first();
+    // Try multiple locators for advanced filter button
+    return this.page.locator('button:has-text("Advanced"), button[id*="advanced"], button[class*="advanced"], button:has-text("Filter"), [id*="filter"], .filter-toggle, .advanced-filter').first();
   }
 
   getInterpoName(): Locator {
-    return this.page.locator('[class*="name"], [id*="name"]').first();
+    return this.page.locator('tr[role="row"]')
+  .filter({ hasText: '+7000050000' })
+  .locator('td[aria-colindex="3"]');
   }
 
   getInterpoPhone(): Locator {
-    return this.page.locator('[class*="phone"], [id*="phone"]').first();
+    return this.page.locator('tr[role="row"]')
+    .filter({ hasText: 'Handset Standard 1' })
+    .locator('td[aria-colindex="4"]');
   }
 
   getPaginationInput(): Locator {
@@ -1030,12 +1042,34 @@ export class CATPage {
   }
 
   getViewBtn(): Locator {
-    return this.page.locator('button:has-text("View"), button[id*="view"]').first();
+    // 1. Define the row first (the parent)
+   const row = this.page.locator('tr[role="row"]').filter({ hasText: 'Handset Standard 1' });
+
+// 2. Now use that row to find the button inside it (the child)
+   return   row.getByRole('link', { name: /view/i });
+
+    // return this.page.locator('tr[role="row"]').filter({ hasText: 'NAME' }).locator('#ptt-listedt')
   }
 
   // --- Methods for OSM Tests ---
   nagavateToSideMenu(): Locator {
     return this.page.locator('[id*="sidenav-menu"], .sidenav-item, aside nav li');
+  }
+
+  openOSMPage(): Locator {
+    return this.page.locator('#menu-44-Osm');
+  }
+
+  getOSMSearchErrorMessage(): Locator {
+    return this.page.locator('text=Search Value should be more than 2 chars');
+  }
+
+  getOSMSearchBox(): Locator {
+    return this.page.locator('#osm-list');
+  }
+
+  osmCreateButton(): Locator {
+    return this.page.getByRole('button',{name:'Create OSM List'});
   }
 
   getPagination(): Locator {
@@ -1058,12 +1092,9 @@ export class CATPage {
 
   async addOSMMssg(code: string, shortMsg: string, longMsg: string) {
     // Add OSM Message
-    const addBtn = this.page.locator('button:has-text("Add"), button[id*="add-msg"]').first();
-    if (await addBtn.isVisible()) {
-      await addBtn.click();
-      await this.page.waitForTimeout(500);
-    }
-
+    const addBtn = this.page.locator('#osm-addnew').first();
+    await addBtn.click();
+    
     // Fill code
     const codeInput = this.page.locator('input[id*="code"], input[placeholder*="Code"]').first();
     await codeInput.fill(code);
