@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Group Profile Creation With Bulk Group Import', () => {
   let page: any;
@@ -12,9 +12,11 @@ test.describe('One Portal CAT - Group Profile Creation With Bulk Group Import', 
   });
 
   // GP-056: Create Standard group profile with bulk groups import
-  test('GP-056 Verify Creating Standard group profile with bulk groups import', async ({ page }) => {
+  test('GP-056 Verify Creating Standard group profile with bulk groups import', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitGroupProfile();
     await page.waitForTimeout(5000);
@@ -66,9 +68,11 @@ test.describe('One Portal CAT - Group Profile Creation With Bulk Group Import', 
   });
 
   // GP-057: Validate Import Button
-  test('GP-057 Validate Import Button', async ({ page }) => {
+  test('GP-057 Validate Import Button', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const visitCATBtn = pageObj.getVisitWithinCat();
     if (await visitCATBtn.isVisible().catch(() => false)) {

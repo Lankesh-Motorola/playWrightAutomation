@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
 
 export class CATPage {
-  constructor(private page: Page) { }
+  constructor(public page: Page) { }
 
   // --- Navigation ---
   getPTTUserButton(): Locator {
@@ -309,10 +309,15 @@ export class CATPage {
   }
 
   async visitGroupProfile() {
-    // Navigate to Group Profile
-    const groupProfileNav = this.page.locator('text=Group Profile, [id*="group-profile"]').first();
+    const groupProfileNav = this.page.locator('msi-sidebar-item[id$="GroupProfile"]').first();
     await groupProfileNav.click();
     await this.page.waitForLoadState('networkidle');
+  }
+
+  async searchByGroupProfileName(name: string) {
+    const searchBox = this.page.locator('input[placeholder="Search by Group Profile Name"]');
+    await searchBox.fill(name);
+    await this.page.waitForTimeout(2000);
   }
 
   // --- Complex Action Methods ---
@@ -614,8 +619,10 @@ export class CATPage {
     return this.page.locator('button:has-text("Cancel")').first();
   }
 
-  getEditBtn(): Locator {
-    return this.page.locator('button[id*="edit"], [class*="edit-icon"]').first();
+  async getEditBtn(): Promise<Locator> {
+    const actionButton = this.page.locator('button.transparent_button:has(svg-icon.action-icon)').nth(1); //Click 2nd icon
+    await actionButton.click();
+    return actionButton;
   }
 
   async forceClickEvent(locator: Locator) {
@@ -1086,14 +1093,35 @@ export class CATPage {
 
   // --- Methods for Group_Profile Tests ---
   async selectGroupProfile(profileType: string = 'Standard') {
-    // Select a group profile type (Standard, Broadcast, Dispatch, etc.)
-    const typeButtons = this.page.locator('button, span, div').filter({ hasText: profileType });
-    const firstBtn = typeButtons.first();
-    if (await firstBtn.isVisible().catch(() => false)) {
-      await firstBtn.click();
-      await this.page.waitForTimeout(500);
+    // 1. Click on create group profile button
+    const createGroupProfile = this.page.getByRole('button', { name: /Create/i }).first();
+    await createGroupProfile.click();
+
+    // 2. Define locators based on the profileType
+   const profileMap: Record<string, string> = {
+        'Standard': 'gpm-option-std',
+        'Dispatch': 'gpm-option-dispatch',
+        'Broadcast': 'gpm-option-broadcast'
+    };
+
+    const targetId = profileMap[profileType];
+
+    if (targetId) {
+        // Option A: Click by ID (Most reliable if IDs are static)
+        const radioButton = this.page.locator(`msi-radio-button#${targetId}`);
+        await radioButton.click();
+    } else {
+        // Option B: Fallback to searching for the Label text within the popup
+        const label = this.page.locator('.create-grp-profile-popup label').filter({ hasText: profileType });
+        await label.click();
     }
-  }
+
+    // 3. Click the "Create" button inside the popup to confirm selection
+    const confirmCreate = this.page.locator('#gpm-create').filter({ hasText: /^Create$/ });
+    await confirmCreate.click();
+    
+    await this.page.waitForLoadState('networkidle');
+}
 
   async createEmptyGroupProfile(profileName: string, profileType: string = 'Standard') {
     // Create an empty group profile without talkgroup
@@ -1127,7 +1155,8 @@ export class CATPage {
   async createGroupProfileWithTalkgrp(profileName: string, talkGroups: string, profileType: string = 'Standard') {
     // Create a group profile with talkgroup
     await this.createEmptyGroupProfile(profileName, profileType);
-    
+    const talkgroupCheckbox = await this.getCreateTlkgrpwithGrpPrflCheckbox();
+    await talkgroupCheckbox.check();
     // Navigate back to group profile
     await this.visitGroupProfile();
   }
@@ -1142,19 +1171,20 @@ export class CATPage {
     }
   }
 
+  async clickDeleteIcon() {
+    return this.page.locator('.delete_icon').first();
+  }
+
   async deleteGroupProfile(profileName: string) {
-    // Delete a group profile
-    await this.visitGroupProfile();
-    
     const searchBox = this.getSearchBox();
     await searchBox.fill(profileName);
-    await this.page.waitForTimeout(2000);
+    await searchBox.press('Enter');
 
-    const deleteBtn = this.page.locator('button:has-text("Delete"), button[id*="delete"]').first();
+    const deleteBtn = this.page.locator('.delete_action_icon').first();
     if (await deleteBtn.isVisible().catch(() => false)) {
       await deleteBtn.click();
       
-      const confirmBtn = this.page.locator('button:has-text("OK"), button:has-text("Yes"), button:has-text("Confirm")').first();
+      const confirmBtn = this.page.locator('button:has-text("OK")').first();
       if (await confirmBtn.isVisible()) {
         await confirmBtn.click();
         await this.page.waitForLoadState('networkidle');
@@ -1164,11 +1194,11 @@ export class CATPage {
 
   async deleteTalkGroup(talkgroupName: string = '') {
     // Delete a talkgroup (updated to accept name parameter)
-    const deleteBtn = this.page.locator('button:has-text("Delete"), button[id*="delete"]').first();
+    const deleteBtn = this.page.locator('.delete_action_icon').first();
     if (await deleteBtn.isVisible().catch(() => false)) {
       await deleteBtn.click();
 
-      const confirmBtn = this.page.locator('button:has-text("OK"), button:has-text("Yes"), button:has-text("Confirm")').first();
+      const confirmBtn = this.page.locator('button:has-text("Ok")').first();
       if (await confirmBtn.isVisible()) {
         await confirmBtn.click();
         await this.page.waitForLoadState('networkidle');
@@ -1193,17 +1223,17 @@ export class CATPage {
 
   getGroupProfileNameTextField(): Locator {
     // Get group profile name text field
-    return this.page.locator('input[id*="profile"], input[id*="name"], input[placeholder*="Profile Name"], input[placeholder*="Name"]').first();
+    return this.page.locator('input[title="Group Profile Name"]').first();
   }
 
-  getCreateTlkgrpwithGrpPrflCheckbox(): Locator {
+  async getCreateTlkgrpwithGrpPrflCheckbox(): Promise<Locator> {
     // Get checkbox to create talkgroup with group profile
-    return this.page.locator('input[type="checkbox"][id*="create"], input[type="checkbox"][id*="talkgroup"]').first();
+    return this.page.locator('label.msi-checkbox-label', { hasText: 'Create talkgroup with this group profile' })
   }
 
   getTalkgroupIcon(): Locator {
     // Get talkgroup icon/button
-    return this.page.locator('button:has-text("Add"), button[id*="add-talkgroup"], [class*="icon-add"]').first();
+    return this.page.locator('button[id="gpm-assign"]').first();
   }
 
   getTalkGrpNameInGroupProfile(): Locator {
@@ -1232,8 +1262,8 @@ export class CATPage {
   }
 
   getAudioCutIn(): Locator {
-    // Get audio cut-in checkbox
-    return this.page.locator('input[type="checkbox"][id*="audio"]').first();
+    // Get audio cut-in checkbox label (native input is intercepted by msi-checkbox wrapper)
+    return this.page.locator('label.msi-checkbox-label', { hasText: 'Audio Cut in' });
   }
 
   getDuplicate(): Locator {
@@ -1292,7 +1322,7 @@ export class CATPage {
 
   getAddGrp(): Locator {
     // Get add group/talkgroup button
-    return this.page.locator('button:has-text("Add"), button[id*="add"]').first();
+    return this.page.locator('button[id="gpm-assign"]').first();
   }
 
   getImport(): Locator {
@@ -1307,7 +1337,7 @@ export class CATPage {
 
   getInputGroupName(): Locator {
     // Get group name input field
-    return this.page.locator('input[id*="group-name"], input[placeholder*="Group Name"]').first();
+    return this.page.locator('input[placeholder="Group Name"]').first();
   }
 
   async selectTalkgroupType(talkgroupType: string) {

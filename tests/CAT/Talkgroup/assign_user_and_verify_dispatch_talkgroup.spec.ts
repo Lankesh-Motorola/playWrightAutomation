@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Assign User and Verify Dispatch Talkgroup', () => {
   let page: any;
@@ -12,9 +12,11 @@ test.describe('One Portal CAT - Assign User and Verify Dispatch Talkgroup', () =
   });
 
   // TG-006: Create Dispatch TalkGroup and add user with supervisors and dispatchers
-  test('TG-006 Create Dispatch TalkGroup and add user with supervisors and dispatchers', async ({ page }) => {
+  test('TG-006 Create Dispatch TalkGroup and add user with supervisors and dispatchers', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitTalkGroup();
     await pageObj.createTalkGroupAndAddUser('Dispatch', 'TalkGr_DispatchName', 'TalkGr_Assign_User');
@@ -82,9 +84,11 @@ test.describe('One Portal CAT - Assign User and Verify Dispatch Talkgroup', () =
   });
 
   // TG-007: Delete Dispatch Talkgroup
-  test('TG-007 Delete Dispatch Talkgroup', async ({ page }) => {
+  test('TG-007 Delete Dispatch Talkgroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.deleteTalkGroup('TalkGr_DispatchNameEdit');
   });

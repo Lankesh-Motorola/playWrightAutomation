@@ -1,6 +1,6 @@
 import { test, expect, BrowserContext } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin, launchAndGetNewPageObject } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - PTT User Features', () => {
   let context: BrowserContext;
@@ -13,9 +13,11 @@ test.describe('One Portal CAT - PTT User Features', () => {
   });
 
   // TC_015: Verify client type change from standard to radio and vice versa
-  test('TC_015 Verify client type change from standard to radio and vice versa', async ({ page }) => {
+  test('TC_015 Verify client type change from standard to radio and vice versa', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.switchClientTypePTTUser();
@@ -24,9 +26,11 @@ test.describe('One Portal CAT - PTT User Features', () => {
   });
 
   // TC_016: Verify permission changes for a subscriber
-  test('TC_016 Verify permission changes for a subscriber', async ({ page }) => {
+  test('TC_016 Verify permission changes for a subscriber', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.changePermissionPTTUser();
@@ -35,27 +39,33 @@ test.describe('One Portal CAT - PTT User Features', () => {
   });
 
   // TC_017: Verify Updating Email ID
-  test('TC_017 Verify Updating Email ID', async ({ page }) => {
+  test('TC_017 Verify Updating Email ID', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.updateEmailIdPTTUser();
   });
 
   // TC_018: Verify Activation Code Generation
-  test('TC_018 Verify Activation Code Generation', async ({ page }) => {
+  test('TC_018 Verify Activation Code Generation', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.activationCodeGenerationPTTUser();
   });
 
   // TC_019: Verify setting up zones, position and scan list for PTT Radio type of client
-  test('TC_019 Verify setting up zones position and scan list for PTT Radio type of client', async ({ page }) => {
+  test('TC_019 Verify setting up zones position and scan list for PTT Radio type of client', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.clickEvent(pageObj.getTabOpt(1));
@@ -72,9 +82,11 @@ test.describe('One Portal CAT - PTT User Features', () => {
   });
 
   // TC_020: Verify Updating Features for the subscriber
-  test('TC_020 Verify Updating Features for the subscriber', async ({ page }) => {
+  test('TC_020 Verify Updating Features for the subscriber', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.updateFeaturesPTTUser();

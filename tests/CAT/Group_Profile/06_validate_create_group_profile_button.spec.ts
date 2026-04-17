@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   let page: any;
@@ -12,9 +12,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-016: Click on Create Group Profile button
-  test('GP-016 Click on Create Group Profile button', async ({ page }) => {
+  test('GP-016 Click on Create Group Profile button', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitGroupProfile();
     
@@ -29,36 +31,44 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-017: Verify Create group profile page is displayed
-  test('GP-017 Verify Create group profile page is displayed', async ({ page }) => {
+  test('GP-017 Verify Create group profile page is displayed', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const groupProfileHeader = pageObj.getGroupProfileMntHeader();
     await expect(groupProfileHeader).toContainText('Group Profile Details');
   });
 
   // GP-018: Verify save button visibility
-  test('GP-018 Verify save button visibility', async ({ page }) => {
+  test('GP-018 Verify save button visibility', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const saveBtn = pageObj.getSaveButton();
     await expect(saveBtn).toContainText('Save');
   });
 
   // GP-019: Verify cancel button visibility
-  test('GP-019 Verify cancel button visibility', async ({ page }) => {
+  test('GP-019 Verify cancel button visibility', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const cancelBtn = pageObj.getCancelButton();
     await expect(cancelBtn).toContainText('Cancel');
   });
 
   // GP-020: Verify group name field
-  test('GP-020 Verify group name field', async ({ page }) => {
+  test('GP-020 Verify group name field', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const groupNameInput = pageObj.getInputGroupMnt();
     await groupNameInput.click();
@@ -66,9 +76,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-021: Verify Group Type dropdown
-  test('GP-021 Verify Group Type dropdown', async ({ page }) => {
+  test('GP-021 Verify Group Type dropdown', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const groupTypeDropdown = pageObj.getDropDownGrpMnt();
     await expect(groupTypeDropdown).toBeVisible();
@@ -76,9 +88,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-022: Verify Avatar dropdown
-  test('GP-022 Verify Avatar dropdown', async ({ page }) => {
+  test('GP-022 Verify Avatar dropdown', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const avatarDropdown = pageObj.getDropDownGrpMntAvatar();
     await expect(avatarDropdown).toBeVisible();
@@ -86,9 +100,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-023: Verify interop checkbox
-  test('GP-023 Verify interop checkbox', async ({ page }) => {
+  test('GP-023 Verify interop checkbox', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const interopCheckbox = page.locator('msi-checkbox[name="ugwInteropFlag_GP"]').first();
     if (await interopCheckbox.isVisible().catch(() => false)) {
@@ -98,9 +114,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-024: Verify Avatar Dropdown selection
-  test('GP-024 Verify Avatar Dropdown selection', async ({ page }) => {
+  test('GP-024 Verify Avatar Dropdown selection', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const avatarDropdown = pageObj.getDropDownGrpMntAvatar();
     await avatarDropdown.click();
@@ -113,9 +131,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-025: Verify Audio Cut-in checkbox
-  test('GP-025 Verify Audio Cut-in checkbox', async ({ page }) => {
+  test('GP-025 Verify Audio Cut-in checkbox', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const autoCutInCheckbox = pageObj.getCheckboxGrpMntAutoCutIn();
     await autoCutInCheckbox.click();
@@ -123,9 +143,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-026: Verify Create talkgroup with group profile checkbox
-  test('GP-026 Verify Create talkgroup with group profile checkbox', async ({ page }) => {
+  test('GP-026 Verify Create talkgroup with group profile checkbox', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const createTalkgroupCheckbox = pageObj.getCreateTalkgroupGrpMnt();
     await expect(createTalkgroupCheckbox).toBeVisible();
@@ -135,9 +157,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-027: Verify talkgroup tab displayed after checkbox selection
-  test('GP-027 Verify talkgroup tab displayed after checkbox selection', async ({ page }) => {
+  test('GP-027 Verify talkgroup tab displayed after checkbox selection', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const searchInput = pageObj.getInputSearchGrpMnt();
     await expect(searchInput).toBeVisible();
@@ -154,9 +178,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-028: Verify Add Groups and Import icons state
-  test('GP-028 Verify Add Groups and Import icons state', async ({ page }) => {
+  test('GP-028 Verify Add Groups and Import icons state', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const addGroupBtn = pageObj.getAddGrp();
     await expect(addGroupBtn).toBeVisible();
@@ -168,9 +194,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-029: Verify Search field default state
-  test('GP-029 Verify Search field default state in Talkgroup tab', async ({ page }) => {
+  test('GP-029 Verify Search field default state in Talkgroup tab', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const searchInput = pageObj.getInputSearchGrpMnt();
     await expect(searchInput).toBeVisible();
@@ -178,9 +206,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-030: Verify click on Add Group icon
-  test('GP-030 Verify click on Add Group icon', async ({ page }) => {
+  test('GP-030 Verify click on Add Group icon', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await page.waitForTimeout(2000);
     
@@ -192,9 +222,11 @@ test.describe('One Portal CAT - Create Group Profile Button Validation', () => {
   });
 
   // GP-031: Verify adding duplicate groups
-  test('GP-031 Verify adding duplicate groups', async ({ page }) => {
+  test('GP-031 Verify adding duplicate groups', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     const groupNameInput = pageObj.getInputGroupName();
     await groupNameInput.fill('grp123');

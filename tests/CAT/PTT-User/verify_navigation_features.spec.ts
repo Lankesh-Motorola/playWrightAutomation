@@ -1,13 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - PTT User Navigation Features', () => {
   let pageObj: CATPage;
 
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
   });
 
   // TC_001: Verify navigating to "PTT Users" in View Mode and verify the fields

@@ -1,6 +1,6 @@
 import { test, expect, BrowserContext } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Edit PTT User and Assigned User', () => {
   let context: BrowserContext;
@@ -13,9 +13,11 @@ test.describe('One Portal CAT - Edit PTT User and Assigned User', () => {
   });
 
   // TC_021: PTT User Edit
-  test('TC_021 PTT User Edit', async ({ page }) => {
+  test('TC_021 PTT User Edit', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
 
@@ -30,9 +32,11 @@ test.describe('One Portal CAT - Edit PTT User and Assigned User', () => {
   });
 
   // TC_022: Assign User to PTT User and User Set
-  test('TC_022 Assign User to PTT User and User Set', async ({ page }) => {
+  test('TC_022 Assign User to PTT User and User Set', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
 
@@ -45,9 +49,11 @@ test.describe('One Portal CAT - Edit PTT User and Assigned User', () => {
   });
 
   // TC_023: Verify Authorized users of the subscriber
-  test('TC_023 Verify Authorized users of the subscriber', async ({ page }) => {
+  test('TC_023 Verify Authorized users of the subscriber', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
 
@@ -56,9 +62,11 @@ test.describe('One Portal CAT - Edit PTT User and Assigned User', () => {
   });
 
   // TC_024: Delete User
-  test('TC_024 Delete User', async ({ page }) => {
+  test('TC_024 Delete User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
 
@@ -68,9 +76,11 @@ test.describe('One Portal CAT - Edit PTT User and Assigned User', () => {
   });
 
   // TC_025: Delete User Set
-  test('TC_025 Delete User Set', async ({ page }) => {
+  test('TC_025 Delete User Set', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
 

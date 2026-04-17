@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Create/Verify Dispatch Group Profile', () => {
   let page: any;
@@ -12,10 +12,11 @@ test.describe('One Portal CAT - Create/Verify Dispatch Group Profile', () => {
   });
 
   // GP-013: Dispatch Group Profile Management
-  test('GP-013 Dispatch Group Profile Management', async ({ page }) => {
+  test.only('GP-013 Dispatch Group Profile Management', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
-
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
     await pageObj.visitGroupProfile();
     await pageObj.selectGroupProfile('Dispatch');
     
@@ -31,18 +32,21 @@ test.describe('One Portal CAT - Create/Verify Dispatch Group Profile', () => {
   });
 
   // GP-014: Delete dispatch talkgroup
-  test('GP-014 Delete dispatch talkgroup', async ({ page }) => {
+  test('GP-014 Delete dispatch talkgroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
-
-    await pageObj.deleteTalkGroup('Dispatch_Talkgroup_Name');
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
+    await newPageObj.visitGroupProfile();
+    await newPageObj.deleteTalkGroup('Dispatch_Talkgroup_Name');
   });
 
   // GP-015: Delete dispatch group profile
-  test('GP-015 Delete dispatch group profile', async ({ page }) => {
+  test('GP-015 Delete dispatch group profile', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
-
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
     await pageObj.deleteGroupProfile('Dispatch_Group_Profile_Name');
   });
 });

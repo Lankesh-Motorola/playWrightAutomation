@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Empty Group Profile', () => {
   let page: any;
@@ -12,9 +12,11 @@ test.describe('One Portal CAT - Empty Group Profile', () => {
   });
 
   // GP-053: Creating Standard empty group profile
-  test('GP-053 Create Standard empty group profile', async ({ page }) => {
+  test('GP-053 Create Standard empty group profile', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitGroupProfile();
     await page.waitForTimeout(5000);
@@ -60,9 +62,11 @@ test.describe('One Portal CAT - Empty Group Profile', () => {
   });
 
   // GP-054: Creating Dispatch empty group profile
-  test('GP-054 Creating Dispatch empty group profile', async ({ page }) => {
+  test('GP-054 Creating Dispatch empty group profile', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitGroupProfile();
     await page.waitForTimeout(5000);
@@ -105,9 +109,11 @@ test.describe('One Portal CAT - Empty Group Profile', () => {
   });
 
   // GP-055: Creating Broadcast empty group profile
-  test('GP-055 Creating Broadcast empty group profile', async ({ page }) => {
+  test('GP-055 Creating Broadcast empty group profile', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitGroupProfile();
     await page.waitForTimeout(5000);

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Create and Verify Standard Talkgroup', () => {
   let page: any;
@@ -12,9 +12,11 @@ test.describe('One Portal CAT - Create and Verify Standard Talkgroup', () => {
   });
 
   // TG-002: Create Standard TalkGroup
-  test('TG-002 Create Standard TalkGroup', async ({ page }) => {
+  test('TG-002 Create Standard TalkGroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     // Create standard talkgroup with assigned user
     await pageObj.createStandardTalkGr('TalkGr_Name', false, false, 'TalkGr_Assign_User');
@@ -33,9 +35,11 @@ test.describe('One Portal CAT - Create and Verify Standard Talkgroup', () => {
   });
 
   // TG-003: Delete Talkgroup
-  test('TG-003 Delete Talkgroup', async ({ page }) => {
+  test('TG-003 Delete Talkgroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.deleteTalkGroup('TalkGr_Name');
   });

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Verify Assign User Set', () => {
   let page: any;
@@ -12,18 +12,22 @@ test.describe('One Portal CAT - Verify Assign User Set', () => {
   });
 
   // US-004: Verify assigning user Sets to the Users
-  test('US-004 Verify assiging user Sets to the Users', async ({ page }) => {
+  test('US-004 Verify assiging user Sets to the Users', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitUserSetEditPage();
     await pageObj.assignUserSet(1);
   });
 
   // US-005: Verify navigating to Created Userset in View Mode
-  test('US-005 Verify navigating to the Created Userset in View Mode and verify the fields', async ({ page }) => {
+  test('US-005 Verify navigating to the Created Userset in View Mode and verify the fields', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitUserSetViewPage();
     await page.waitForTimeout(1000);
@@ -40,9 +44,11 @@ test.describe('One Portal CAT - Verify Assign User Set', () => {
   });
 
   // US-006: Verify Adding Members from View to Edit Mode
-  test('US-006 Verify Adding Members to the from View to Edit Mode', async ({ page }) => {
+  test('US-006 Verify Adding Members to the from View to Edit Mode', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitUserSetViewPage();
     await page.waitForTimeout(1000);

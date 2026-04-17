@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - External User Validation', () => {
   let page: any;
@@ -17,9 +17,11 @@ test.describe('One Portal CAT - External User Validation', () => {
   });
 
   // Ex-053: Verify phone field error for more than 15 digit invalid MDN
-  test('Ex-053 Verify phone field to show some error message if we pass more than 15 digit invalid MDN', async ({ page }) => {
+  test('Ex-053 Verify phone field to show some error message if we pass more than 15 digit invalid MDN', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitCat();
     await pageObj.forceClickEvent(pageObj.getExtUserBtn());
@@ -34,9 +36,11 @@ test.describe('One Portal CAT - External User Validation', () => {
   });
 
   // Ex-054: Verify phone field error for alphabetical MDN
-  test('Ex-054 Verify phone field to show some error message if we pass alphabetical MDN', async ({ page }) => {
+  test('Ex-054 Verify phone field to show some error message if we pass alphabetical MDN', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitCat();
     await pageObj.forceClickEvent(pageObj.getExtUserBtn());

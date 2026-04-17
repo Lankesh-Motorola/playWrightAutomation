@@ -1,13 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 let pageObj: CATPage;
 
 test.describe('CAT - Assign User and Verify Dispatch InterOp Talkgroup', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
   });
 
   test('TG-038: Create and Assign User to Dispatch InterOp Talkgroup', async ({ page }) => {

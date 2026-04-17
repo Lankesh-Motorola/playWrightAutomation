@@ -1,6 +1,6 @@
 import { test, expect, BrowserContext } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Priority Standard Talkgroup', () => {
   let context: BrowserContext;
@@ -13,25 +13,31 @@ test.describe('One Portal CAT - Priority Standard Talkgroup', () => {
   });
 
   // TC_029: Create standard talkgroup
-  test('TC_029 Create standard talkgroup', async ({ page }) => {
+  test('TC_029 Create standard talkgroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.createStandardTalkGr();
   });
 
   // TC_030: Enable priority change
-  test('TC_030 Enable priority change', async ({ page }) => {
+  test('TC_030 Enable priority change', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.changeTalkgroupScanPriorityForStandardUser('Standard');
   });
 
   // TC_031: Modify priority change
-  test('TC_031 Modify priority change', async ({ page }) => {
+  test('TC_031 Modify priority change', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.clickEvent(pageObj.getTabOpt(1));
@@ -48,9 +54,11 @@ test.describe('One Portal CAT - Priority Standard Talkgroup', () => {
   });
 
   // TC_032: Reverting priority change
-  test('TC_032 Reverting priority change', async ({ page }) => {
+  test('TC_032 Reverting priority change', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.clickEvent(pageObj.getTabOpt(1));
@@ -70,9 +78,11 @@ test.describe('One Portal CAT - Priority Standard Talkgroup', () => {
   });
 
   // TC_033: Delete talkgroup
-  test('TC_033 Delete talkgroup', async ({ page }) => {
+  test('TC_033 Delete talkgroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.deleteTalkGroup();
   });

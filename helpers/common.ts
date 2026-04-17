@@ -2,17 +2,18 @@ import { Page, BrowserContext, expect } from '@playwright/test';
 import { CATPage } from '../pages/CATPage';
 
 // //15.0 CI Login Credentials
-const LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/login';
-const POST_LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
-const USERNAME = 'wcsr_automation@moto.com';
-const PASSWORD = 'Motorola@123';
-export const corp_id = 'WCSR_AUTO_1';
+// const LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/login';
+// const POST_LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
+// const USERNAME = 'wcsr_automation@moto.com';
+// const PASSWORD = 'Motorola@123';
+// export const corp_id = 'WCSR_AUTO_1';
 
 // //14.0 CI Login Credentials
-// const LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/login';
-// const POST_LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
-// const USERNAME = 'ciwcsr4@gmail.com';
-// const PASSWORD = 'Kodiak@1234567890';
+const LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/login';
+const POST_LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
+const USERNAME = 'ciwcsr4@gmail.com';
+const PASSWORD = 'Kodiak@1234567890';
+export const corp_id = '140_CI_Automation';
 
 export async function wcsrLogin(page: Page): Promise<void> {
   await page.goto(LOGIN_URL, { waitUntil: 'commit', timeout: 60_000 });
@@ -40,20 +41,27 @@ export async function verifyExternalUsrSearch(page: Page, pageObj: CATPage, name
 }
 
 export async function launchAndGetNewPageObject(context: BrowserContext, pageObj: CATPage, corporateID: string): Promise<CATPage> {
-  // Click Corporate Management
+  // 1. Setup navigation steps
   await pageObj.clickCorporateManagement();
-  
-  // Enter Corporate ID
   await pageObj.enterCorporateID(corporateID);
   
-  // Set up listener for new tab BEFORE clicking launch
+  // 2. Setup the listener
   const pagePromise = context.waitForEvent('page');
+  
+  // 3. Trigger the action that opens the new tab
   await pageObj.clickLaunch();
   
-  // Wait for the new tab to open
+  // 4. Capture and wait for the new page
   const newPage = await pagePromise;
-  await newPage.waitForLoadState();
+
+  // IMPORTANT: Wait for 'networkidle' to ensure APIs are done loading 
+  // and 'domcontentloaded' to ensure the HTML is parsed.
+  await newPage.waitForLoadState('domcontentloaded');
+  await newPage.waitForLoadState('networkidle');
+
+  // 5. Ensure the new page is focused
+  await newPage.bringToFront();
   
-  // Return new PageObject instance for the NEW TAB
+  // 6. Return initialized instance
   return new CATPage(newPage);
 }

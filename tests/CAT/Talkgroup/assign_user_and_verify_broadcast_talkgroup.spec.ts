@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Assign User and Verify Broadcast Talkgroup', () => {
   let page: any;
@@ -12,9 +12,11 @@ test.describe('One Portal CAT - Assign User and Verify Broadcast Talkgroup', () 
   });
 
   // TG-008: Create Broadcast TalkGroup and add broadcasters
-  test('TG-008 Create Broadcast TalkGroup and add broadcasters', async ({ page }) => {
+  test('TG-008 Create Broadcast TalkGroup and add broadcasters', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     // Visit Talk Group page
     await pageObj.visitTalkGroup();
@@ -57,9 +59,11 @@ test.describe('One Portal CAT - Assign User and Verify Broadcast Talkgroup', () 
   });
 
   // TG-009: Delete Broadcast Talkgroup
-  test('TG-009 Delete Broadcast Talkgroup', async ({ page }) => {
+  test('TG-009 Delete Broadcast Talkgroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.deleteTalkGroup('TalkGr_BroadNameEdit');
   });

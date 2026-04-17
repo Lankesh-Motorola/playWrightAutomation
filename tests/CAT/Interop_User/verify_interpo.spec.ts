@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Interop User', () => {
   let page: any;
@@ -12,9 +12,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-001: Verify navigating to Interop Connection and verify fields
-  test('IT-001 Verify navigating to the Interop Connection and verify the fields', async ({ page }) => {
+  test('IT-001 Verify navigating to the Interop Connection and verify the fields', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUser();
     await pageObj.validateInterpoCount();
@@ -23,9 +25,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-002: Verify availability of Export in Interop List Page
-  test('IT-002 verify the availabity of Export in Interop LIst Page', async ({ page }) => {
+  test('IT-002 verify the availabity of Export in Interop LIst Page', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUser();
     await pageObj.checkVisibility(pageObj.getExportBtn());
@@ -33,9 +37,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-003: Verify availability of Pagination
-  test('IT-003 verify the availabity of Pagination', async ({ page }) => {
+  test('IT-003 verify the availabity of Pagination', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUser();
     await pageObj.validateInterpoCount();
@@ -44,9 +50,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-004: Verify Basic Search and verify the Count
-  test('IT-004 verify Basic Search and verif the Count', async ({ page }) => {
+  test('IT-004 verify Basic Search and verif the Count', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUser();
     await pageObj.validateInterpoCount();
@@ -62,9 +70,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-005: Verify Advanced Search filter with Client Type
-  test('IT-005 verify Advance Search filter with Client Type  and verify the Count', async ({ page }) => {
+  test('IT-005 verify Advance Search filter with Client Type  and verify the Count', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUser();
     await pageObj.clickEvent(pageObj.getAdvanceFilter());
@@ -81,9 +91,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-006: Verify navigating to Interop User edit page
-  test('IT-006 Verify navigating to the Interop User and verify the fields', async ({ page }) => {
+  test('IT-006 Verify navigating to the Interop User and verify the fields', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUserEditPage('InteropTestUser');
     await pageObj.checkVisibility(pageObj.getUserName());
@@ -96,9 +108,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-007: Verify the state of the fields
-  test('IT-007 Verify the state of the fileds', async ({ page }) => {
+  test('IT-007 Verify the state of the fileds', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUserEditPage('InteropTestUser');
     await pageObj.checkEnabled(await pageObj.checkHaveValue(pageObj.getUserName(), 'InteropTestUser'));
@@ -111,9 +125,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-008: Verify Updating Name for Interop User
-  test('IT-008 Verify Updating Name for Interop User', async ({ page }) => {
+  test('IT-008 Verify Updating Name for Interop User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUserEditPage('InteropTestUser');
     
@@ -127,9 +143,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-009: Verify Updating Permission for Interop User
-  test('IT-009 Verify Updating Permission for Interop User', async ({ page }) => {
+  test('IT-009 Verify Updating Permission for Interop User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUserEditPage('InteropTestUser');
     await pageObj.changePermissionInterpoUser();
@@ -139,9 +157,11 @@ test.describe('One Portal CAT - Interop User', () => {
   });
 
   // IT-010: Verify Updated Name and Permission in List page
-  test('IT-010 Verify the Updated Name and  Permission for Interop User in List page', async ({ page }) => {
+  test('IT-010 Verify the Updated Name and  Permission for Interop User in List page', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.getInterpoUser();
     

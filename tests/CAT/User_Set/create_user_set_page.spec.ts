@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Create User Set', () => {
   let page: any;
@@ -12,9 +12,11 @@ test.describe('One Portal CAT - Create User Set', () => {
   });
 
   // US-002: Create User Set
-  test('US-002 Create User Set', async ({ page }) => {
+  test('US-002 Create User Set', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitUserSet();
     await pageObj.createUserSet();
@@ -22,9 +24,11 @@ test.describe('One Portal CAT - Create User Set', () => {
   });
 
   // US-003: Delete User Set
-  test('US-003 delete user Set', async ({ page }) => {
+  test('US-003 delete user Set', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.deleteUserSet('TestUserSet');
   });

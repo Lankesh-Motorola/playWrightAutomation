@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - External User Verification', () => {
   let page: any;
@@ -17,9 +17,11 @@ test.describe('One Portal CAT - External User Verification', () => {
   });
 
   // Ex-049: Navigate to external User
-  test('Ex-049 navigate to external User', async ({ page }) => {
+  test('Ex-049 navigate to external User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitCat();
     await pageObj.forceClickEvent(pageObj.getExtUserBtn());
@@ -28,9 +30,11 @@ test.describe('One Portal CAT - External User Verification', () => {
   });
 
   // Ex-050: Verify the Search placeholder and Availability of Search field
-  test('Ex-050 Verify the Search placeholder and Availability of Search field', async ({ page }) => {
+  test('Ex-050 Verify the Search placeholder and Availability of Search field', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitCat();
     await pageObj.forceClickEvent(pageObj.getExtUserBtn());
@@ -38,9 +42,11 @@ test.describe('One Portal CAT - External User Verification', () => {
   });
 
   // Ex-051: Verify Visibility of Search Icon, Import and Export icon
-  test('Ex-051 Verify Visibility of Search Icon Import and Export icon Tooltip of Import and Export icons', async ({ page }) => {
+  test('Ex-051 Verify Visibility of Search Icon Import and Export icon Tooltip of Import and Export icons', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitCat();
     await pageObj.forceClickEvent(pageObj.getExtUserBtn());

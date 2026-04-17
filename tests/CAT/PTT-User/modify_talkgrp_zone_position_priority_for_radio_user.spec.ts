@@ -1,6 +1,6 @@
 import { test, expect, BrowserContext } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Modify Talkgroup Zone Position Priority', () => {
   let context: BrowserContext;
@@ -13,17 +13,21 @@ test.describe('One Portal CAT - Modify Talkgroup Zone Position Priority', () => 
   });
 
   // TC_042: Create Standard Talk Group with assigning the Radio type User
-  test('TC_042 Create Standard Talk Group with assigning the Radio type User', async ({ page }) => {
+  test('TC_042 Create Standard Talk Group with assigning the Radio type User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.createStandardTalkGr();
   });
 
   // TC_043: Verify Modifying Priorities for Radio type User
-  test('TC_043 Verify Modifying Priorities for Radio type User', async ({ page }) => {
+  test('TC_043 Verify Modifying Priorities for Radio type User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.clickEvent(pageObj.getTabOpt(1));
@@ -49,9 +53,11 @@ test.describe('One Portal CAT - Modify Talkgroup Zone Position Priority', () => 
   });
 
   // TC_044: Modify Zone, Channels and priorities for Radio type User
-  test('TC_044 Modify Zone Channels and priorities for Radio type User', async ({ page }) => {
+  test('TC_044 Modify Zone Channels and priorities for Radio type User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.getTalkgrpInPTTUser();
@@ -69,9 +75,11 @@ test.describe('One Portal CAT - Modify Talkgroup Zone Position Priority', () => 
   });
 
   // TC_045: Verify Reverting Zone, Position and priority values for Radio type User
-  test('TC_045 Verify Reverting Zone Position and priority values for Radio type User', async ({ page }) => {
+  test('TC_045 Verify Reverting Zone Position and priority values for Radio type User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.getTalkgrpInPTTUser();
@@ -88,9 +96,11 @@ test.describe('One Portal CAT - Modify Talkgroup Zone Position Priority', () => 
   });
 
   // TC_046: Delete talkgroup
-  test('TC_046 Delete talkgroup', async ({ page }) => {
+  test('TC_046 Delete talkgroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.deleteTalkGroup();
   });

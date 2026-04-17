@@ -1,6 +1,6 @@
 import { test, expect, BrowserContext } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin, launchAndGetNewPageObject } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Feature Enable/Disable', () => {
   let context: BrowserContext;
@@ -13,9 +13,11 @@ test.describe('One Portal CAT - Feature Enable/Disable', () => {
   });
 
   // TC_012: Verify Enabling Feature for the subscriber
-  test('TC_012 Verify Enabling Feature for the subscriber', async ({ page }) => {
+  test('TC_012 Verify Enabling Feature for the subscriber', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.featurePttUser();
@@ -23,9 +25,11 @@ test.describe('One Portal CAT - Feature Enable/Disable', () => {
   });
 
   // TC_013: Verify enabling Emergency feature for the subscriber
-  test('TC_013 Verify enabling Emergency feature for the subscriber', async ({ page }) => {
+  test('TC_013 Verify enabling Emergency feature for the subscriber', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.enabledfeautureEmergency();
@@ -33,9 +37,11 @@ test.describe('One Portal CAT - Feature Enable/Disable', () => {
   });
 
   // TC_014: Verify disabling Emergency feature for the subscriber
-  test('TC_014 Verify disabling Emergency feature for the subscriber', async ({ page }) => {
+  test('TC_014 Verify disabling Emergency feature for the subscriber', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.disableEmergencyFeature();

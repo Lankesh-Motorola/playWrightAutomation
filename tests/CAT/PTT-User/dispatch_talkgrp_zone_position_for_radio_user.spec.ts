@@ -1,6 +1,6 @@
 import { test, expect, BrowserContext } from '@playwright/test';
 import { CATPage } from '../../../pages/CATPage';
-import { wcsrLogin } from '../../../helpers/common';
+import { wcsrLogin, launchAndGetNewPageObject, corp_id } from '../../../helpers/common';
 
 test.describe('One Portal CAT - Dispatch Talkgroup Zone Position', () => {
   let context: BrowserContext;
@@ -13,18 +13,22 @@ test.describe('One Portal CAT - Dispatch Talkgroup Zone Position', () => {
   });
 
   // TC_047: Create Dispatch Talk Group with assigning the Radio type User
-  test('TC_047 Create Dispatch Talk Group with assigning the Radio type User', async ({ page }) => {
+  test('TC_047 Create Dispatch Talk Group with assigning the Radio type User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitTalkGroup();
     await pageObj.createTalkGroupAndAddUser('Dispatch');
   });
 
   // TC_048: Verify Zone and channels for Dispatch Talk Group of Radio User
-  test('TC_048 Verify Zone and channels for Dispatch Talk Group of Radio User', async ({ page }) => {
+  test('TC_048 Verify Zone and channels for Dispatch Talk Group of Radio User', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.visitPTTUserEditPage();
     await pageObj.clickEvent(pageObj.getTabOpt(1));
@@ -42,9 +46,11 @@ test.describe('One Portal CAT - Dispatch Talkgroup Zone Position', () => {
   });
 
   // TC_049: Delete talkgroup
-  test('TC_049 Delete talkgroup', async ({ page }) => {
+  test('TC_049 Delete talkgroup', async ({ page, context }) => {
     await wcsrLogin(page);
     pageObj = new CATPage(page);
+    // Launch and get the new page object
+    const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
 
     await pageObj.deleteTalkGroup();
   });
