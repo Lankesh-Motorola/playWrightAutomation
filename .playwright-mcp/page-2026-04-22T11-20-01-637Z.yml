@@ -1,0 +1,35 @@
+- generic [ref=e4]:
+  - banner [ref=e7]:
+    - generic [ref=e9]:
+      - generic [ref=e12] [cursor=pointer]:
+        - generic [ref=e14]:
+          - img "emsignia light"
+        - generic [ref=e16]: Web based Customer Service Representative Tool
+      - generic [ref=e20] [cursor=pointer]:
+        - generic [ref=e24]:
+          - img "contact picture light"
+        - generic [ref=e25]: wcsr_automation@moto.com
+        - img [ref=e27]
+  - generic [ref=e31]:
+    - generic [ref=e32]:
+      - generic [ref=e33]: Welcome to Customer Service Representative Tool!
+      - generic [ref=e34]:
+        - paragraph [ref=e35]: Customer Service Representative Tool provides a platform for care representative to manage the corporations as well as individual subscribers. The CSR can provision/de-provision subscribers and manage their profile using Subscriber Management. Also can manage corporations using Corporate Admin Tool, which is accessed from within CSR Tool. Following functions can be performed. Note that not all the functions are applicable to your system and may be grayed out or not available.
+        - paragraph [ref=e36]: Click on ‘Subscriber Management’ to view and create subscribers.
+        - paragraph [ref=e37]: Click on ‘Corporate Management’ and enter corporate ID to launch Corporate Admin Tool.
+    - generic [ref=e39]:
+      - generic [ref=e40] [cursor=pointer]:
+        - img [ref=e43]
+        - generic [ref=e46]: Subscriber Management
+      - generic [active] [ref=e47] [cursor=pointer]:
+        - img [ref=e50]
+        - generic [ref=e52]: Corporate Management
+      - generic [ref=e53]:
+        - generic [ref=e54]:
+          - text: Launch Corporate Admin Tool
+          - img [ref=e56]
+        - generic [ref=e60]:
+          - textbox "Enter Corporate ID" [ref=e61]
+          - button "Launch" [ref=e63] [cursor=pointer]:
+            - img [ref=e65]
+            - text: Launch

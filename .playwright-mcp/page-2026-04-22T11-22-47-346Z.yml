@@ -1,0 +1,306 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - banner [ref=e7]:
+      - generic [ref=e9]:
+        - link "emsignia light Central Admin Tool" [ref=e12] [cursor=pointer]:
+          - /url: "#/cat/pttuser/list"
+          - generic [ref=e14]:
+            - img "emsignia light"
+          - generic [ref=e16]: Central Admin Tool
+        - generic [ref=e18]:
+          - generic [ref=e21] [cursor=pointer]:
+            - generic [ref=e23]:
+              - generic [ref=e25]:
+                - img "circle light"
+              - generic [ref=e26]: H1
+            - generic [ref=e27]: Handset Standard 1
+            - img [ref=e29]
+          - menu [ref=e31] [cursor=pointer]:
+            - img [ref=e33]
+    - generic [ref=e36]:
+      - navigation [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - generic [ref=e43] [cursor=pointer]:
+              - generic [ref=e46]:
+                - img "contacts people"
+              - generic:
+                - generic: PTT Users
+            - generic [ref=e47] [cursor=pointer]:
+              - generic [ref=e50]:
+                - img "id card"
+              - generic:
+                - generic: User Profile Management
+            - generic [ref=e51] [cursor=pointer]:
+              - generic [ref=e54]:
+                - img "contacts settings"
+              - generic:
+                - generic: Group Profile Management
+            - generic [ref=e55] [cursor=pointer]:
+              - generic [ref=e58]:
+                - img "contacts groups"
+              - generic:
+                - generic: Talkgroups
+            - generic [ref=e59] [cursor=pointer]:
+              - generic [ref=e62]:
+                - img "id visitor badge"
+              - generic:
+                - generic: External Users
+            - generic [ref=e63] [cursor=pointer]:
+              - generic [ref=e66]:
+                - img "app service"
+              - generic:
+                - generic: Integrated Users
+            - generic [ref=e67] [cursor=pointer]:
+              - generic [ref=e70]:
+                - img "ptt patchgroup"
+              - generic:
+                - generic: Interop Connections
+            - generic [ref=e71] [cursor=pointer]:
+              - generic [ref=e74]:
+                - img "memberlist"
+              - generic:
+                - generic: User Sets
+            - generic [ref=e75] [cursor=pointer]:
+              - generic [ref=e78]:
+                - img "messages settings"
+              - generic:
+                - generic: OSM Configuration
+          - generic [ref=e79] [cursor=pointer]:
+            - generic [ref=e82]:
+              - img "expand right"
+            - generic:
+              - generic: Collapse
+      - generic [ref=e990]:
+        - generic [ref=e991]:
+          - heading "User Sets (46)" [level=3] [ref=e993]
+          - button "Create User Set" [ref=e994] [cursor=pointer]
+        - generic [ref=e996]:
+          - generic [ref=e1001]:
+            - textbox "Search by User Set Name" [ref=e1002]
+            - img [ref=e1004]
+          - button [ref=e1008] [cursor=pointer]:
+            - img [ref=e1010]
+        - generic [ref=e1017]:
+          - table [ref=e1019]:
+            - caption
+            - rowgroup [ref=e1020]:
+              - row "Name Assigned No.of Users" [ref=e1021]:
+                - columnheader [ref=e1022]:
+                  - button [ref=e1024]
+                - columnheader "Name" [ref=e1026]:
+                  - button "Name" [ref=e1028]:
+                    - generic [ref=e1030]: Name
+                - columnheader "Assigned No.of Users" [ref=e1031]:
+                  - button "Assigned No.of Users" [ref=e1033]:
+                    - generic [ref=e1035]: Assigned No.of Users
+                - columnheader [ref=e1036]:
+                  - button [ref=e1038]
+            - generic [ref=e1041]:
+              - row "TestUserSet_Debug 2" [ref=e1042]:
+                - generic [ref=e1043]:
+                  - cell [ref=e1044]
+                  - cell "TestUserSet_Debug" [ref=e1047]:
+                    - textbox [ref=e1049]
+                  - cell "2" [ref=e1050]:
+                    - generic [ref=e1051]: "2"
+                  - cell [ref=e1052]:
+                    - generic [ref=e1053]:
+                      - generic:
+                        - button [ref=e1054] [cursor=pointer]:
+                          - img [ref=e1056]
+                        - button [ref=e1059] [cursor=pointer]:
+                          - img [ref=e1061]
+                        - button [ref=e1064] [cursor=pointer]:
+                          - img [ref=e1066]
+              - row "UserSet_1776688289513 2" [ref=e1068]:
+                - generic [ref=e1069]:
+                  - cell [ref=e1070]
+                  - cell "UserSet_1776688289513" [ref=e1073]:
+                    - textbox [ref=e1075]
+                  - cell "2" [ref=e1076]:
+                    - generic [ref=e1077]: "2"
+                  - cell [ref=e1078]:
+                    - generic [ref=e1079]:
+                      - generic:
+                        - button [ref=e1080] [cursor=pointer]:
+                          - img [ref=e1082]
+                        - button [ref=e1085] [cursor=pointer]:
+                          - img [ref=e1087]
+                        - button [ref=e1090] [cursor=pointer]:
+                          - img [ref=e1092]
+              - row "UserSet_1776751335094 1" [ref=e1094]:
+                - generic [ref=e1095]:
+                  - cell [ref=e1096]
+                  - cell "UserSet_1776751335094" [ref=e1099]:
+                    - textbox [ref=e1101]
+                  - cell "1" [ref=e1102]:
+                    - generic [ref=e1103]: "1"
+                  - cell [ref=e1104]:
+                    - generic [ref=e1105]:
+                      - generic:
+                        - button [ref=e1106] [cursor=pointer]:
+                          - img [ref=e1108]
+                        - button [ref=e1111] [cursor=pointer]:
+                          - img [ref=e1113]
+                        - button [ref=e1116] [cursor=pointer]:
+                          - img [ref=e1118]
+              - row "UserSet_1776835240249 1" [ref=e1120]:
+                - generic [ref=e1121]:
+                  - cell [ref=e1122]
+                  - cell "UserSet_1776835240249" [ref=e1125]:
+                    - textbox [ref=e1127]
+                  - cell "1" [ref=e1128]:
+                    - generic [ref=e1129]: "1"
+                  - cell [ref=e1130]:
+                    - generic [ref=e1131]:
+                      - generic:
+                        - button [ref=e1132] [cursor=pointer]:
+                          - img [ref=e1134]
+                        - button [ref=e1137] [cursor=pointer]:
+                          - img [ref=e1139]
+                        - button [ref=e1142] [cursor=pointer]:
+                          - img [ref=e1144]
+              - row "UserSet_1776835891122 1" [ref=e1146]:
+                - generic [ref=e1147]:
+                  - cell [ref=e1148]
+                  - cell "UserSet_1776835891122" [ref=e1151]:
+                    - textbox [ref=e1153]
+                  - cell "1" [ref=e1154]:
+                    - generic [ref=e1155]: "1"
+                  - cell [ref=e1156]:
+                    - generic [ref=e1157]:
+                      - generic:
+                        - button [ref=e1158] [cursor=pointer]:
+                          - img [ref=e1160]
+                        - button [ref=e1163] [cursor=pointer]:
+                          - img [ref=e1165]
+                        - button [ref=e1168] [cursor=pointer]:
+                          - img [ref=e1170]
+              - row "UserSet_1776836489164 1" [ref=e1172]:
+                - generic [ref=e1173]:
+                  - cell [ref=e1174]
+                  - cell "UserSet_1776836489164" [ref=e1177]:
+                    - textbox [ref=e1179]
+                  - cell "1" [ref=e1180]:
+                    - generic [ref=e1181]: "1"
+                  - cell [ref=e1182]:
+                    - generic [ref=e1183]:
+                      - generic:
+                        - button [ref=e1184] [cursor=pointer]:
+                          - img [ref=e1186]
+                        - button [ref=e1189] [cursor=pointer]:
+                          - img [ref=e1191]
+                        - button [ref=e1194] [cursor=pointer]:
+                          - img [ref=e1196]
+              - row "UserSet_1776838130337 1" [ref=e1198]:
+                - generic [ref=e1199]:
+                  - cell [ref=e1200]
+                  - cell "UserSet_1776838130337" [ref=e1203]:
+                    - textbox [ref=e1205]
+                  - cell "1" [ref=e1206]:
+                    - generic [ref=e1207]: "1"
+                  - cell [ref=e1208]:
+                    - generic [ref=e1209]:
+                      - generic:
+                        - button [ref=e1210] [cursor=pointer]:
+                          - img [ref=e1212]
+                        - button [ref=e1215] [cursor=pointer]:
+                          - img [ref=e1217]
+                        - button [ref=e1220] [cursor=pointer]:
+                          - img [ref=e1222]
+              - row "UserSet_1776838182540 1" [ref=e1224]:
+                - generic [ref=e1225]:
+                  - cell [ref=e1226]
+                  - cell "UserSet_1776838182540" [ref=e1229]:
+                    - textbox [ref=e1231]
+                  - cell "1" [ref=e1232]:
+                    - generic [ref=e1233]: "1"
+                  - cell [ref=e1234]:
+                    - generic [ref=e1235]:
+                      - generic:
+                        - button [ref=e1236] [cursor=pointer]:
+                          - img [ref=e1238]
+                        - button [ref=e1241] [cursor=pointer]:
+                          - img [ref=e1243]
+                        - button [ref=e1246] [cursor=pointer]:
+                          - img [ref=e1248]
+              - row "UserSet_1776838368800 1" [ref=e1250]:
+                - generic [ref=e1251]:
+                  - cell [ref=e1252]
+                  - cell "UserSet_1776838368800" [ref=e1255]:
+                    - textbox [ref=e1257]
+                  - cell "1" [ref=e1258]:
+                    - generic [ref=e1259]: "1"
+                  - cell [ref=e1260]:
+                    - generic [ref=e1261]:
+                      - generic:
+                        - button [ref=e1262] [cursor=pointer]:
+                          - img [ref=e1264]
+                        - button [ref=e1267] [cursor=pointer]:
+                          - img [ref=e1269]
+                        - button [ref=e1272] [cursor=pointer]:
+                          - img [ref=e1274]
+              - row "UserSet_1776838432078 1" [ref=e1276]:
+                - generic [ref=e1277]:
+                  - cell [ref=e1278]
+                  - cell "UserSet_1776838432078" [ref=e1281]:
+                    - textbox [ref=e1283]
+                  - cell "1" [ref=e1284]:
+                    - generic [ref=e1285]: "1"
+                  - cell [ref=e1286]:
+                    - generic [ref=e1287]:
+                      - generic:
+                        - button [ref=e1288] [cursor=pointer]:
+                          - img [ref=e1290]
+                        - button [ref=e1293] [cursor=pointer]:
+                          - img [ref=e1295]
+                        - button [ref=e1298] [cursor=pointer]:
+                          - img [ref=e1300]
+              - row "UserSet_1776838492938 1" [ref=e1302]:
+                - generic [ref=e1303]:
+                  - cell [ref=e1304]
+                  - cell "UserSet_1776838492938" [ref=e1307]:
+                    - textbox [ref=e1309]
+                  - cell "1" [ref=e1310]:
+                    - generic [ref=e1311]: "1"
+                  - cell [ref=e1312]:
+                    - generic [ref=e1313]:
+                      - generic:
+                        - button [ref=e1314] [cursor=pointer]:
+                          - img [ref=e1316]
+                        - button [ref=e1319] [cursor=pointer]:
+                          - img [ref=e1321]
+                        - button [ref=e1324] [cursor=pointer]:
+                          - img [ref=e1326]
+          - generic [ref=e1331]:
+            - button "First Page" [disabled]:
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+            - button "Previous Page" [disabled]:
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+            - button "1" [ref=e1333] [cursor=pointer]
+            - button "Next Page" [disabled]:
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+            - button "Last Page" [disabled]:
+              - generic:
+                - generic:
+                  - generic:
+                    - img
+            - generic [ref=e1334] [cursor=pointer]:
+              - combobox "Rows per page" [ref=e1335]: "50"
+              - button "dropdown trigger" [ref=e1336]
+  - generic [ref=e1338]:
+    - generic [ref=e1341]:
+      - img "menu available"
+    - generic [ref=e1342]: "'TestUserSet_Debug'‎ added successfully."
+    - generic [ref=e1345] [cursor=pointer]:
+      - img "remove"

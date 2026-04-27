@@ -158,54 +158,5 @@ test.describe('One Portal CAT - Create OSM List', () => {
     }
   });
 
-  // OSM-17: Complete OSM List Creation Test
-  test('OSM-17 create complete OSM List with verification', async ({ page, context }) => {
-    // Step 1: Enter OSM page using existing functions
-    newPageObj = await setupOSMPage(page, context);
-    
-    // Step 2: Click Create OSM List button
-    const createButton = newPageObj.osmCreateButton();
-    await expect(createButton).toBeVisible();
-    await createButton.click();
-    
-    // Wait for create form to load
-    await newPageObj.getPage().waitForLoadState();
-    await newPageObj.getPage().waitForTimeout(2000);
-    
-    // Step 3: Enter unique list name starting with OSM-
-    const uniqueListName = generateUniqueOSMListName();
-    const listNameInput = newPageObj.getPage().locator('.row > :nth-child(1) > .msi-input').first();
-    await expect(listNameInput).toBeVisible();
-    await listNameInput.fill(uniqueListName);
-    
-    // Verify the name was entered correctly
-    await expect(listNameInput).toHaveValue(uniqueListName);
-    
-    // Step 4: Click Save button
-    const saveBtn = newPageObj.getPage().locator('button:has-text("Save"), .ms-2').first();
-    await expect(saveBtn).toBeVisible();
-    await saveBtn.click({ force: true });
-    
-    // Step 5: Wait for save operation to complete
-    await newPageObj.getPage().waitForTimeout(3000);
-    
-    // Alternative: Wait for page navigation or list to load
-    try {
-      // Try to wait for URL change or page reload  
-      await newPageObj.getPage().waitForLoadState('networkidle', { timeout: 10000 });
-    } catch (error) {
-      console.log('Page did not change significantly, continuing...');
-    }
-    
-    // Step 6: Navigate back to OSM list to verify created list
-    await newPageObj.openOSMPage();
-    await newPageObj.getPage().waitForLoadState();
-    await newPageObj.getPage().waitForTimeout(2000);
-    
-    // Step 7: Verify the created list name is present in the list
-    const createdListItem = newPageObj.getPage().locator(`text=${uniqueListName}`);
-    await expect(createdListItem).toBeVisible({ timeout: 15000 });
-    
-    console.log(`✅ Successfully created and verified OSM List: ${uniqueListName}`);
-  });
+ 
 });

@@ -1,18 +1,27 @@
 import { Page, BrowserContext, expect } from '@playwright/test';
 import { CATPage } from '../pages/CATPage';
 
-// //15.0 CI Login Credentials
+// // //15.0 CI Login Credentials
 // const LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/login';
 // const POST_LOGIN_URL = 'https://wms-dev-automtn.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
 // const USERNAME = 'wcsr_automation@moto.com';
 // const PASSWORD = 'Motorola@123';
+// export const corp_id = 'WCSR_AUTO_1';
 
-//14.0 CI Login Credentials
-const LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/login';
-const POST_LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
-const USERNAME = 'ciwcsr4@gmail.com';
-const PASSWORD = 'Kodiak@1234567890';
-export const corp_id = '140_CI_Automation';
+// 14.0 CI Login Credentials
+// const LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/login';
+// const POST_LOGIN_URL = 'https://wms-dev-cirhel8.msiidcitgcloud.com/csrkodiak/index.html#/wcsr/home';
+// const USERNAME = 'ciwcsr4@gmail.com';
+// const PASSWORD = 'Kodiak@1234567890';
+// export const corp_id = '140_CI_Automation';
+
+// CSRK
+const LOGIN_URL = 'https://wms-multisite.kodiakindmedia.com/csrkodiak/login';
+const POST_LOGIN_URL = 'https://wms-multisite.kodiakindmedia.com/csrkodiak/index.html#/wcsr/home';
+const USERNAME = 'mcx@msi.com';
+const PASSWORD = 'MotorolaKodiak@2026';
+export const corp_id = 'Multi-Site-2U';
+
 
 // Generate unique OSM list name starting with OSM-
 export function generateUniqueOSMListName(): string {
@@ -105,5 +114,14 @@ export async function setupOSMPage(page: Page, context: BrowserContext): Promise
     await newPageObj.getPage().waitForTimeout(1000);
   }
   
+  return newPageObj;
+}
+
+export async function enterIntoApplication(page: Page, context: BrowserContext): Promise<CATPage> {
+  await wcsrLogin(page);
+  const pageObj = new CATPage(page);
+  
+  const newPageObj = await launchAndGetNewPageObject(context, pageObj, corp_id);
+  await newPageObj.getPage().waitForLoadState();
   return newPageObj;
 }

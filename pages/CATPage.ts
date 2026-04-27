@@ -1,8 +1,12 @@
 import { Page, Locator, expect } from '@playwright/test';
+import * as fs from 'fs';
+import * as path from 'path';
 
+let userSetName: string = "";
 export class CATPage {
-  constructor(private page: Page) { }
 
+  constructor(private page: Page) { }
+  
   // --- Navigation ---
   getPTTUserButton(): Locator {
     return this.page.locator('#menu-44-PTTUsers');
@@ -126,6 +130,14 @@ export class CATPage {
 
   getFontSize14(item: string): Locator {
     return this.page.locator('.font-size-14').filter({ hasText: item });
+  }
+
+  getOkBtn(): Locator {
+    return this.page.getByRole('button', { name: 'Ok' });
+  }
+
+  getUserSetSearchBox(): Locator {
+    return this.page.getByPlaceholder('Search by Name or Phone Number');
   }
 
   //Click Corporate Management:
@@ -747,6 +759,49 @@ export class CATPage {
     return this.page.locator('input[id*="phone"], input[placeholder*="Phone"]').first();
   }
 
+  getUserSetButton(): Locator {
+    return this.page.locator("#menu-44-Usersets");
+  }
+
+  getAssignUserButton(): Locator {
+    return this.page.locator("button[id='uset-asnbtn']");
+  }
+  getAssignUserNameInput(): Locator {
+    return this.page.locator("tr td p").first();
+  }
+  getEditUserSetNameInput(): Locator {
+    return this.page.locator("input[name='Edit Name']");
+  }
+
+  getAssignUserCheckBox(): Locator {
+    return this.page.locator("td msi-icon[class='msi-checkbox-icon msi-icon']").first();
+  }
+
+  getAssignUserSecondCheckBox(): Locator {
+    return this.page.locator("td msi-icon[class='msi-checkbox-icon msi-icon']").nth(2);
+  }
+  getEditUserSetBtn(): Locator {
+    return this.page.locator("svg-icon.inlineEdit")
+  }
+
+
+  getAssignUserSaveBtn(): Locator {
+    return this.page.getByRole('button', { name:'Assign'});
+  }
+
+  getUserListSearchBox(): Locator {
+    return this.page.getByPlaceholder('Search List')
+  }
+
+  getUserSetViewBtn(): Locator {
+    return this.page.locator("button[class='transparent_button ng-star-inserted']").nth(2);
+  }
+  getAssignmentDetailsBtn(): Locator {
+    return this.page.getByRole('button', { name: 'Assignment Details' });
+  }
+  getViewUserSetEditBtn(): Locator {
+    return this.page.getByRole('button', { name: 'Edit' });
+  }
   async getPhoneError(): Promise<string> {
     // Get phone error message
     const errorMsg = this.page.locator('[class*="error"], [class*="mat-error"]').first();
@@ -783,83 +838,128 @@ export class CATPage {
   // --- Methods for User_Set Tests ---
   async visitUserSet() {
     // Navigate to User Set page
-    const userSetNav = this.page.locator('text=User Set, [id*="user-set"]').first();
-    if (await userSetNav.isVisible().catch(() => false)) {
-      await userSetNav.click();
-    }
-    await this.page.waitForLoadState('networkidle');
+    const userSetButton= this.page.locator('#menu-44-Usersets').first();
+    await expect(userSetButton).toBeVisible();
+    await userSetButton.click();
+    await this.page.waitForLoadState();
+    await expect(this.getCreateUserSetButton()).toBeVisible();
   }
 
   async createUserSet() {
     // Create a new user set
+    userSetName = `UserSet_${Date.now()}`;
+    
+    // Store the generated userSetName in cat.json for reuse in other tests
+    const testDataDir = path.join(process.cwd(), 'pages', 'test-data');
+    const testDataPath = path.join(testDataDir, 'cat.json');
+    let testData: any = {};
+    
+    // Ensure directory exists
+    if (!fs.existsSync(testDataDir)) {
+      fs.mkdirSync(testDataDir, { recursive: true });
+    }
+    
+    // Read existing data if file exists and has content
+    if (fs.existsSync(testDataPath)) {
+      try {
+        const fileContent = fs.readFileSync(testDataPath, 'utf-8');
+        if (fileContent.trim()) {
+          testData = JSON.parse(fileContent);
+        }
+      } catch (error) {
+        console.log('Error reading test data file:', error);
+        testData = {};
+      }
+    }
+    
+    // Update with new userSetName
+    testData.userSetName = userSetName;
+    testData.lastUpdated = new Date().toISOString();
+    
+    // Write back to file
+    fs.writeFileSync(testDataPath, JSON.stringify(testData, null, 2));
+    
     const createBtn = this.getCreateUserSetButton();
+    expect(createBtn).toBeVisible();
     await createBtn.click();
-    await this.page.waitForLoadState('networkidle');
 
     // Fill in details
-    const nameInput = this.getUserSetNameInput();
-    await nameInput.fill(`UserSet_${Date.now()}`);
+    const  nameInput = this.getUserSetNameInput();
+    await nameInput.fill(userSetName);
+    await this.assignUserToUserSet();
 
     // Save
     await this.clickSaveBtn();
+    await this.getOkBtn().click();
   }
 
-  async verifySearch(searchTerm: string) {
+  async verifySearch(boolean: boolean = true) {
     // Verify search functionality
+    await this.page.waitForTimeout(3000);
+    const storedUserSetName = this.getStoredUserSetName();
     const searchBox = this.getSearchBox();
-    await searchBox.fill(searchTerm);
-    await this.page.waitForTimeout(1000);
-
-    const searchResult = this.page.locator(`text=${searchTerm}`).first();
+    await searchBox.clear();
+    await searchBox.fill(storedUserSetName);
+    await this.page.keyboard.press('Enter');
+    const searchResult = this.page.locator(`text=${storedUserSetName}`).first();
     await expect(searchResult).toBeVisible();
+    if (boolean===false) {
+      await expect(searchResult).not.toBeVisible();
+    }
   }
 
-  async deleteUserSet(userSetName: string) {
-    // Delete a user set
-    await this.visitUserSet();
-    
-    const deleteBtn = this.page.locator('button[id*="delete"], button:has-text("Delete")').first();
+  async deleteUserSet() {
+    await this.page.waitForTimeout(4000);
+    const storedUserSetName = this.getStoredUserSetName();
+     const searchBox = this.getSearchBox();
+     await expect(searchBox).toBeVisible();
+    await searchBox.fill(storedUserSetName);
+    await this.page.keyboard.press('Enter');
+    const row = this.page.locator('tr').filter({ has: this.page.locator('p', { hasText: `${storedUserSetName}` }) });
+    const deleteBtn = row.locator("button[id='usr-set-listbtn']");
     await deleteBtn.click();
-
-    const confirmBtn = this.page.locator('button:has-text("OK"), button:has-text("Yes"), button:has-text("Confirm")').first();
-    if (await confirmBtn.isVisible()) {
-      await confirmBtn.click();
-      await this.page.waitForLoadState('networkidle');
-    }
+    await this.getOkButton().click();
   }
-
+ 
   async visitUserSetEditPage() {
-    // Navigate to User Set edit page
-    await this.visitUserSet();
+    // Navigate to User Set page using the same method as working tests
+    await this.openUserSetPage();
     
-    const editBtn = this.page.locator('button[id*="edit"], [class*="edit-icon"]').first();
-    if (await editBtn.isVisible()) {
-      await editBtn.click();
-      await this.page.waitForLoadState('networkidle');
-    }
+    // Get the stored user set name
+    const storedUserSetName = this.getStoredUserSetName();
+    console.log('Looking for user set:', storedUserSetName);
+    
+    // Wait for the user set to appear in the list
+    await expect(this.page.locator('p', { hasText: storedUserSetName })).toBeVisible({ timeout: 15000 });
+    
+    // Find the specific row containing the user set
+    const row = this.page.locator('tr').filter({ has: this.page.locator('p', { hasText: `${storedUserSetName}` }) });
+    await expect(row).toBeVisible();
+    
+    // Find and click the edit button in that row (second transparent_button which is the edit button)
+    const editBtn = row.locator('button.transparent_button').nth(1);
+    await expect(editBtn).toBeVisible();
+    await editBtn.click();
+    
+    // Wait for navigation and verify we're on edit/details page
+    await this.page.waitForLoadState('networkidle');
+    await expect(this.page).toHaveURL(/details|edit/i, { timeout: 10000 });
   }
 
   async assignUserSet(assignType: number = 0) {
-    // Assign user set
-    const assignButton = this.page.locator('button:has-text("Assign"), button[id*="assign"]').nth(assignType);
-    await assignButton.click();
-    await this.page.waitForTimeout(1000);
-
-    const option = this.page.locator('.mat-option, option').first();
-    if (await option.isVisible()) {
-      await option.click();
-    }
+   await this.assignUserToUserSet();
   }
 
   async visitUserSetViewPage() {
-    // Navigate to User Set view page
-    await this.visitUserSet();
+    await expect(this.getUserSetViewBtn()).toBeVisible();
+    await this.getUserSetViewBtn().click();
     
-    const viewBtn = this.page.locator('button:has-text("View"), button[id*="view"]').first();
-    if (await viewBtn.isVisible()) {
-      await viewBtn.click();
-      await this.page.waitForLoadState('networkidle');
-    }
+  }
+
+  async verifyUserSetViewPageFields() {
+    await expect(this.getAssignmentDetailsBtn()).toBeVisible();
+    await expect(this.getViewUserSetEditBtn()).toBeVisible();
+
   }
 
   getUserSetDisName(): Locator {
@@ -905,7 +1005,7 @@ export class CATPage {
   }
 
   getCreateUserSetButton(): Locator {
-    return this.page.locator('button:has-text("Create"), button:has-text("Add User Set")').first();
+    return this.page.getByRole('button', { name: 'Create User Set' });
   }
 
   getExportBtn(): Locator {
@@ -1654,5 +1754,151 @@ export class CATPage {
     const saveBtn = this.getSaveButton();
     await saveBtn.click();
     await this.page.waitForLoadState('networkidle');
+  }
+
+  async openUserSetPage() {
+    await expect(this.getUserSetButton()).toBeVisible();
+    await this.getUserSetButton().click();
+  }
+
+  async assignUserToUserSet(){
+    await this.getAssignUserButton().click();
+    await this.getAssignUserCheckBox().check();
+    await this.getAssignButton().click();
+
+  }
+   async assignSecondUserToUserSet(){
+    userSetName = `UserSet_${Date.now()}`;
+    
+    // Store the generated userSetName in cat.json for reuse in other tests
+    const testDataDir = path.join(process.cwd(), 'pages', 'test-data');
+    const testDataPath = path.join(testDataDir, 'cat.json');
+    
+    // Ensure directory exists
+    fs.mkdirSync(testDataDir, { recursive: true });
+    
+    // Read existing data and update with new userSetName
+    const fileContent = fs.readFileSync(testDataPath, 'utf-8');
+    const testData = JSON.parse(fileContent);
+    testData.userSetName = userSetName;
+    testData.lastUpdated = new Date().toISOString();
+    
+    // Write back to file
+    fs.writeFileSync(testDataPath, JSON.stringify(testData, null, 2));
+    await this.page.waitForTimeout(1000);
+    await expect(this.getAssignUserNameInput()).toBeVisible();
+    await this.getAssignUserNameInput().click();
+    await this.getEditUserSetNameInput().clear();
+    await this.getEditUserSetNameInput().fill(userSetName);
+    await this.getEditUserSetNameInput().press('Enter');
+    await expect(this.getEditUserSetBtn()).toBeVisible();
+    await this.getEditUserSetBtn().click();
+    const searchBox = this.getSearchBox();
+    await searchBox.clear();
+  }
+
+  async modifyUserSetName() {
+    // Get the current userSetName from cat.json
+    const storedUserSetName = this.getStoredUserSetName();
+    
+    // Create locator using getByText with userSetName
+    const userSetNameLocator = this.page.getByText(storedUserSetName);
+    await expect(userSetNameLocator).toBeVisible();
+    await userSetNameLocator.click();
+    
+    // Wait for edit mode and clear the input field
+    const editNameInput = this.page.locator('input[id*="editName"]');
+    await expect(editNameInput).toBeVisible();
+    await editNameInput.clear();
+    
+    // Generate new name and store in cat.json as updatedUserSetName
+    const updatedUserSetName = `UpdatedUserSet_${Date.now()}`;
+    
+    // Update cat.json with the new name
+    const testDataDir = path.join(process.cwd(), 'pages', 'test-data');
+    const testDataPath = path.join(testDataDir, 'cat.json');
+    let testData: any = {};
+    
+    // Ensure directory exists
+    if (!fs.existsSync(testDataDir)) {
+      fs.mkdirSync(testDataDir, { recursive: true });
+    }
+    
+    // Read existing data if file exists and has content
+    if (fs.existsSync(testDataPath)) {
+      try {
+        const fileContent = fs.readFileSync(testDataPath, 'utf-8');
+        if (fileContent.trim()) {
+          testData = JSON.parse(fileContent);
+        }
+      } catch (error) {
+        console.log('Error reading test data file:', error);
+        testData = {};
+      }
+    }
+    
+    testData.updatedUserSetName = updatedUserSetName;
+    testData.lastUpdated = new Date().toISOString();
+    
+    fs.writeFileSync(testDataPath, JSON.stringify(testData, null, 2));
+    
+    // Fill the new name
+    await editNameInput.fill(updatedUserSetName);
+    
+    // Click the inline edit save icon (checkmark)
+    const inlineEditSaveIcon = this.page.locator('svg-icon.inlineEdit.inln-icn.ng-star-inserted');
+    await expect(inlineEditSaveIcon).toBeVisible();
+    await inlineEditSaveIcon.click();
+    
+    // Validate toaster message
+    const toasterMessage = this.page.locator('.toast-message, .toastr-message, [class*="toast"], [class*="notification"]');
+    await expect(toasterMessage).toBeVisible({ timeout: 10000 });
+    const messageText = await toasterMessage.textContent();
+    console.log('Toaster message:', messageText);
+    
+    return updatedUserSetName;
+  }
+
+  async searchUserSet(){
+    const storedUserSetName = this.getStoredUserSetName();
+    const createdUserSetName = this.page.locator('tr').filter({ has: this.page.locator('p', { hasText: `${storedUserSetName}` }) });
+    const searchBox = this.getSearchBox();
+    await searchBox.fill(storedUserSetName);
+    await expect(createdUserSetName).toHaveText(storedUserSetName);
+  }
+
+  // Helper method to read test data from cat.json
+  getStoredTestData(): any {
+    const testDataDir = path.join(process.cwd(), 'pages', 'test-data');
+    const testDataPath = path.join(testDataDir, 'cat.json');
+    
+    if (fs.existsSync(testDataPath)) {
+      try {
+        const fileContent = fs.readFileSync(testDataPath, 'utf-8');
+        if (fileContent.trim()) {
+          return JSON.parse(fileContent);
+        }
+      } catch (error) {
+        console.error('Error reading test data:', error);
+      }
+    }
+    return {};
+  }
+
+  // Helper method to get the stored userSetName
+  getStoredUserSetName(): string {
+    const testData = this.getStoredTestData();
+    return testData.userSetName || '';
+  }
+
+  // Helper method to get the updated userSetName
+  getUpdatedUserSetName(): string {
+    const testData = this.getStoredTestData();
+    return testData.updatedUserSetName || '';
+  }
+
+  async verifyUserSetSearchBox() {
+    const searchBox = this.getSearchBox();
+    await expect(searchBox).toBeVisible();
   }
 }

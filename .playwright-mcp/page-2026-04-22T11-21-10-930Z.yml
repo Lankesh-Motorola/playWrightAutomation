@@ -1,0 +1,258 @@
+- generic [ref=e4]:
+  - banner [ref=e7]:
+    - generic [ref=e9]:
+      - link "emsignia light Central Admin Tool" [ref=e12] [cursor=pointer]:
+        - /url: "#/cat/pttuser/list"
+        - generic [ref=e14]:
+          - img "emsignia light"
+        - generic [ref=e16]: Central Admin Tool
+      - generic [ref=e18]:
+        - generic [ref=e21] [cursor=pointer]:
+          - generic [ref=e23]:
+            - generic [ref=e25]:
+              - img "circle light"
+            - generic [ref=e26]: H1
+          - generic [ref=e27]: Handset Standard 1
+          - img [ref=e29]
+        - menu [ref=e31] [cursor=pointer]:
+          - img [ref=e33]
+  - generic [ref=e36]:
+    - navigation [ref=e40]:
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e43] [cursor=pointer]:
+            - generic [ref=e46]:
+              - img "contacts people"
+            - generic:
+              - generic: PTT Users
+          - generic [ref=e47] [cursor=pointer]:
+            - generic [ref=e50]:
+              - img "id card"
+            - generic:
+              - generic: User Profile Management
+          - generic [ref=e51] [cursor=pointer]:
+            - generic [ref=e54]:
+              - img "contacts settings"
+            - generic:
+              - generic: Group Profile Management
+          - generic [ref=e55] [cursor=pointer]:
+            - generic [ref=e58]:
+              - img "contacts groups"
+            - generic:
+              - generic: Talkgroups
+          - generic [ref=e59] [cursor=pointer]:
+            - generic [ref=e62]:
+              - img "id visitor badge"
+            - generic:
+              - generic: External Users
+          - generic [ref=e63] [cursor=pointer]:
+            - generic [ref=e66]:
+              - img "app service"
+            - generic:
+              - generic: Integrated Users
+          - generic [ref=e67] [cursor=pointer]:
+            - generic [ref=e70]:
+              - img "ptt patchgroup"
+            - generic:
+              - generic: Interop Connections
+          - generic [ref=e71] [cursor=pointer]:
+            - generic [ref=e74]:
+              - img "memberlist"
+            - generic:
+              - generic: User Sets
+          - generic [ref=e75] [cursor=pointer]:
+            - generic [ref=e78]:
+              - img "messages settings"
+            - generic:
+              - generic: OSM Configuration
+        - generic [ref=e79] [cursor=pointer]:
+          - generic [ref=e82]:
+            - img "expand right"
+          - generic:
+            - generic: Collapse
+    - generic [ref=e86]:
+      - heading "PTT Users (4)" [level=3] [ref=e89]
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e96]:
+            - textbox "Search by Name or Phone Number" [ref=e97]
+            - img [ref=e99]
+          - button [ref=e102] [cursor=pointer]:
+            - img [ref=e104]
+        - generic [ref=e109]:
+          - button [disabled] [ref=e110]:
+            - img [ref=e112]
+          - button [disabled] [ref=e116]:
+            - img [ref=e118]
+          - button [disabled] [ref=e122]:
+            - img [ref=e124]
+          - button [disabled] [ref=e126]:
+            - img [ref=e128]
+          - button [ref=e130] [cursor=pointer]:
+            - img [ref=e132]
+      - generic [ref=e137]:
+        - table [ref=e139]:
+          - caption
+          - rowgroup [ref=e140]:
+            - row "checkbox unchecked Name Phone Number Client Type Gateway Account Type" [ref=e141]:
+              - columnheader [ref=e142]
+              - columnheader "checkbox unchecked" [ref=e143] [cursor=pointer]:
+                - button "checkbox unchecked" [ref=e145]:
+                  - generic [ref=e149]:
+                    - generic [ref=e152]:
+                      - img "checkbox unchecked"
+                    - checkbox "checkbox unchecked" [ref=e153]
+              - columnheader [ref=e154]:
+                - button [ref=e156]
+              - columnheader "Name" [ref=e158]:
+                - button "Name" [ref=e160]:
+                  - generic [ref=e162]: Name
+              - columnheader "Phone Number" [ref=e163]:
+                - button "Phone Number" [ref=e165]:
+                  - generic [ref=e167]: Phone Number
+              - columnheader "Client Type" [ref=e168]:
+                - button "Client Type" [ref=e170]:
+                  - generic [ref=e172]: Client Type
+              - columnheader "Gateway Account Type" [ref=e173]:
+                - button "Gateway Account Type" [ref=e175]:
+                  - generic [ref=e177]: Gateway Account Type
+              - columnheader [ref=e178]:
+                - button [ref=e180]
+          - generic [ref=e183]:
+            - row "list arrow down checkbox unchecked Handset Standard 1 +7000050000 Handset Standard None" [ref=e184]:
+              - generic [ref=e185]:
+                - cell "list arrow down" [ref=e186]:
+                  - button "list arrow down" [ref=e187] [cursor=pointer]:
+                    - generic [ref=e189]:
+                      - img "list arrow down"
+                - cell "checkbox unchecked" [ref=e190] [cursor=pointer]:
+                  - generic [ref=e193]:
+                    - generic [ref=e196]:
+                      - img "checkbox unchecked"
+                    - checkbox "checkbox unchecked" [ref=e197]
+                - cell [ref=e198]
+                - cell "Handset Standard 1" [ref=e201]:
+                  - textbox [ref=e203]
+                - cell "+7000050000" [ref=e204]:
+                  - generic [ref=e205]: "+7000050000"
+                - cell "Handset Standard" [ref=e206]:
+                  - generic [ref=e207]: Handset Standard
+                - cell "None" [ref=e208]:
+                  - generic [ref=e209]: None
+                - cell [ref=e210]:
+                  - generic [ref=e211]:
+                    - generic:
+                      - button
+                      - button [ref=e212] [cursor=pointer]:
+                        - img [ref=e214]
+                      - button [ref=e217] [cursor=pointer]:
+                        - img [ref=e219]
+            - row "list arrow down checkbox unchecked Handset_PTT_Radio_1 +7000050002 Handset PTT Radio None" [ref=e221]:
+              - generic [ref=e222]:
+                - cell "list arrow down" [ref=e223]:
+                  - button "list arrow down" [ref=e224] [cursor=pointer]:
+                    - generic [ref=e226]:
+                      - img "list arrow down"
+                - cell "checkbox unchecked" [ref=e227] [cursor=pointer]:
+                  - generic [ref=e230]:
+                    - generic [ref=e233]:
+                      - img "checkbox unchecked"
+                    - checkbox "checkbox unchecked" [ref=e234]
+                - cell [ref=e235]
+                - cell "Handset_PTT_Radio_1" [ref=e238]:
+                  - textbox [ref=e240]
+                - cell "+7000050002" [ref=e241]:
+                  - generic [ref=e242]: "+7000050002"
+                - cell "Handset PTT Radio" [ref=e243]:
+                  - generic [ref=e244]: Handset PTT Radio
+                - cell "None" [ref=e245]:
+                  - generic [ref=e246]: None
+                - cell [ref=e247]:
+                  - generic [ref=e248]:
+                    - generic:
+                      - button
+                      - button [ref=e249] [cursor=pointer]:
+                        - img [ref=e251]
+                      - button [ref=e254] [cursor=pointer]:
+                        - img [ref=e256]
+            - row "list arrow down checkbox unchecked Handset_PTT_Radio_2 +7000050003 Handset PTT Radio None" [ref=e258]:
+              - generic [ref=e259]:
+                - cell "list arrow down" [ref=e260]:
+                  - button "list arrow down" [ref=e261] [cursor=pointer]:
+                    - generic [ref=e263]:
+                      - img "list arrow down"
+                - cell "checkbox unchecked" [ref=e264] [cursor=pointer]:
+                  - generic [ref=e267]:
+                    - generic [ref=e270]:
+                      - img "checkbox unchecked"
+                    - checkbox "checkbox unchecked" [ref=e271]
+                - cell [ref=e272]
+                - cell "Handset_PTT_Radio_2" [ref=e275]:
+                  - textbox [ref=e277]
+                - cell "+7000050003" [ref=e278]:
+                  - generic [ref=e279]: "+7000050003"
+                - cell "Handset PTT Radio" [ref=e280]:
+                  - generic [ref=e281]: Handset PTT Radio
+                - cell "None" [ref=e282]:
+                  - generic [ref=e283]: None
+                - cell [ref=e284]:
+                  - generic [ref=e285]:
+                    - generic:
+                      - button
+                      - button [ref=e286] [cursor=pointer]:
+                        - img [ref=e288]
+                      - button [ref=e291] [cursor=pointer]:
+                        - img [ref=e293]
+            - row "list arrow down checkbox unchecked User 1 +7000050001 Handset Standard None" [ref=e295]:
+              - generic [ref=e296]:
+                - cell "list arrow down" [ref=e297]:
+                  - button "list arrow down" [ref=e298] [cursor=pointer]:
+                    - generic [ref=e300]:
+                      - img "list arrow down"
+                - cell "checkbox unchecked" [ref=e301] [cursor=pointer]:
+                  - generic [ref=e304]:
+                    - generic [ref=e307]:
+                      - img "checkbox unchecked"
+                    - checkbox "checkbox unchecked" [ref=e308]
+                - cell [ref=e309]
+                - cell "User 1" [ref=e312]:
+                  - textbox [ref=e314]
+                - cell "+7000050001" [ref=e315]:
+                  - generic [ref=e316]: "+7000050001"
+                - cell "Handset Standard" [ref=e317]:
+                  - generic [ref=e318]: Handset Standard
+                - cell "None" [ref=e319]:
+                  - generic [ref=e320]: None
+                - cell [ref=e321]:
+                  - generic [ref=e322]:
+                    - generic:
+                      - button
+                      - button [ref=e323] [cursor=pointer]:
+                        - img [ref=e325]
+                      - button [ref=e328] [cursor=pointer]:
+                        - img [ref=e330]
+        - generic [ref=e335]:
+          - button "First Page" [disabled]:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+          - button "Previous Page" [disabled]:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+          - button "1" [ref=e337] [cursor=pointer]
+          - button "Next Page" [disabled]:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+          - button "Last Page" [disabled]:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+          - generic [ref=e338] [cursor=pointer]:
+            - combobox "Rows per page" [ref=e339]: "50"
+            - button "dropdown trigger" [ref=e340]
